@@ -9,6 +9,45 @@ This library is intended to read, manipulate and write astronomical
 @author: Astronomy
 """
 
+class HII_plot_params:
+    def __init__(self,drive,ObjIdentifierDD):
+        #View has two options: raw or flux?
+        self.ID=ObjIdentifierDD
+        self.TargetType=''  #PN, ST, etc.
+        self.RA2000=0.
+        self.DE2000=0.
+        self.X0=0.
+        self.X1=0.
+        self.DX=0.
+        self.Y0=0.
+        self.Y1=0.
+        self.DY=0.
+        self.Ytype=''  #log or linear
+        self.CatFile='' #spectral model file.
+
+        CfgFile=open(drive+'/Astronomy/Python Play/Galaxies/HIIPlotConfig.txt','r')
+        CfgLines=CfgFile.readlines()
+        CfgFile.close()
+        nrecords=len(CfgLines)
+        #print CfgLines
+
+        for recordindex in range(1,nrecords):
+            fields=CfgLines[recordindex].split(',')
+            #print fields[0], fields[1]
+            if fields[0] == ObjIdentifierDD:
+                print "In first if, fields[1]",fields[:]
+                self.TargetType=str(fields[1])
+                self.RA2000=float(fields[2])
+                self.DE2000=float(fields[3])
+                self.X0=float(fields[4])
+                self.X1=float(fields[5])
+                self.DX=float(fields[6])
+                self.Y0=float(fields[7])
+                self.Y1=float(fields[8])
+                self.DY=float(fields[9])
+                self.Ytype=str(fields[10])
+                self.CatFile=str(fields[11])
+
 class Catalog_List:
     """
     Used by some custom PN spectra programs, e.g., *M57Spectrum20150913UT.py*,
