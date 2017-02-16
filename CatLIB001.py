@@ -103,3 +103,50 @@ class Catalog_List:
                 self.Info.extend([str(fields[7])])
                 self.NObs=self.NObs+1
                 
+def PlotHist(Target,radii,nb,plotparams):                
+#Plot Layout Configuration
+    import pylab as pl
+    import numpy as np
+    
+    # Set x limits
+    pl.xlim(plotparams.X0,plotparams.X1)
+    # Set x ticks
+    pl.xticks(np.linspace(plotparams.X0,plotparams.X1,plotparams.X1/2+1, endpoint=True))
+    # Set y limits
+    pl.ylim(plotparams.Y0,plotparams.Y1)
+    # Set y ticks
+    #pl.yscale('log')
+    
+    pl.grid()
+    pl.tick_params(axis='both', which='major', labelsize=7)
+    pl.ylabel(r"$H$ $II$ $Region$ $(Count)$",fontsize=7)
+    
+    pl.title("H II Region Distribution",fontsize=9)
+    pl.hist(radii,bins=nb,color='r',label=Target)
+    pl.legend(loc=1,ncol=2, borderaxespad=0.,prop={'size':6})        
+
+    return 0        
+    
+def PlotPOSDensity(Target,bin_centers,density,plotparams): 
+    import pylab as pl
+    import numpy as np
+
+    y0=0
+    y1=1.5
+    
+    # Set x limits
+    pl.xlim(plotparams.X0,plotparams.X1)
+    # Set x ticks
+    pl.xticks(np.linspace(plotparams.X0,plotparams.X1,plotparams.X1/2+1, endpoint=True))
+    # Set y limits
+    pl.ylim(y0,y1)
+    # Set y ticks
+    #pl.yscale('log')
+    
+    pl.grid()
+    pl.tick_params(axis='both', which='major', labelsize=7)
+    pl.ylabel(r"$H$ $II$ $Region$ $(Count-arcmin^{-2})$",fontsize=7)
+    pl.xlabel(r"$Radius$ $(arcmin)$",fontsize=7)
+    
+    pl.scatter(bin_centers,density,color='r',label=Target)
+    pl.legend(loc=1,ncol=2, borderaxespad=0.,prop={'size':6})
