@@ -1,5 +1,12 @@
-Target,TType,RA2000,DE2000,X0,X1,DX,Y0,Y1,DY,Ytype,Catalog,PA,Incl,Dist
-M33,Galaxies,23.4625,30.660277,0,40,2,0,30,2,Lin,HII_Tags01.csv,23.0,54.0,2.723E6
-M81,Galaxies,148.8875,69.06583,0,20,2,0,30,2,Lin,Hill_H_II_Tags.csv,58.0,157.0,11.74E6
-M101,Galaxies,210.8000,54.34861,0,40,2,0,80,20,Lin,M101_H_II_Tags.csv,0.0,0.0,20.87E6
+PlotID,PlotType,X0,X1,DX,Xtype,Y0,Y1,DY,Ytype,DataList
+M33,POSHist,0,40,2,Lin,0,30,5,Lin,HII_Tags01.csv,
+M33,POSDens,0,40,2,Lin,0,1.0,0.20,Lin,HII_Tags01.csv,
+M33,POSLoc,-30,30,10,Lin,-30,30,10,Lin,HII_Tags01.csv,
 
+M81,POSHist,0,20,2,Lin,0,30,5,Lin,Hill_H_II_Tags.csv,
+M81,POSDens,0,20,2,Lin,0,0.3,0.05,Lin,Hill_H_II_Tags.csv,
+M81,POSLoc,-20,20,5,Lin,-20,20,5,Lin,Hill_H_II_Tags.csv,
+
+M101,POSHist,0,30,2,Lin,0,80,30,Lin,M101_H_II_Tags.csv,
+M101,POSDens,0,30,2,Lin,0,1.5,0.25,Lin,M101_H_II_Tags.csv,
+M101,POSLoc,-25,25,5,Lin,-25,25,5,Lin,M101_H_II_Tags.csv,
