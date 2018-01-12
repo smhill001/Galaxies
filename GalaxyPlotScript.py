@@ -17,52 +17,49 @@ coordinates)
 """
 import pylab as pl
 import numpy as np
-import CatLIB001 as CL
+import GalaxyLIB as GX
 
+#Control Information
 drive="f:"
-
 Target="M101"
 TargetType="Galaxies"
 
-HISTparams=CL.HII_plot_params(drive,Target,"POSHist")
-DENSparams=CL.HII_plot_params(drive,Target,"POSDens")
-LOCparams=CL.HII_plot_params(drive,Target,"POSLoc")
-GXparams=CL.Galaxy_Parameters(drive,Target)
-#print PLparams.RA2000,PLparams.DE2000
+#Parameter Initialization
+HISTparams=GX.HII_plot_params(drive,Target,"POSHist")
+DENSparams=GX.HII_plot_params(drive,Target,"POSDens")
+LOCparams=GX.HII_plot_params(drive,Target,"POSLoc")
+GXparams=GX.Galaxy_Parameters(drive,Target)
+
+#Reading observational data  and transforming the origin to the galactic center
 path=drive+"/Astronomy/Projects/Galaxies/"+Target+"/Imaging Data/Mapping/"
 fn=HISTparams.DataFile
-CatList=CL.Catalog_List(path+fn)
-dr=(np.array(CatList.RAJ2000)-GXparams.RA2000)*60. #in arc minutes
-dd=(np.array(CatList.DEJ2000)-GXparams.DE2000)*60 #in arc minutes
+DataList=GX.ObsDataList(path+fn)
+dr=(np.array(DataList.RAJ2000)-GXparams.RA2000)*60. #in arc minutes
+dd=(np.array(DataList.DEJ2000)-GXparams.DE2000)*60 #in arc minutes
 radii=np.sqrt(dr**2.+dd**2.)
 
+#Computing the distribution histogram and density as a function of radius
 nb=np.arange(HISTparams.X0,HISTparams.X1+1,HISTparams.DX)
 hist=np.histogram(radii, bins=nb)
 bin_centers=np.arange(1,HISTparams.X1+1,HISTparams.DX)
 bin_areas=np.pi*((bin_centers+1)**2-(bin_centers-1)**2)
 density=hist[0]/bin_areas
-#print nb
-#print bin_centers
-#print "radii=",radii
-#print hist[0]
-#print bin_areas
 
-#print "density=",density
-
+#Set up the canvas for plotting
 pl.figure(figsize=(10., 4.), dpi=150, facecolor="white")
 ###############################################################################
 ax = pl.subplot2grid((2, 5), (0, 0))
 ax0 = pl.subplot2grid((2, 5), (0, 0), colspan=3)
 #pl.subplot(2, 1, 1)
-successC=CL.PlotHII(Target,radii,nb,HISTparams) 
+successC=GX.PlotHII(Target,radii,nb,HISTparams) 
 ###############################################################################
 #pl.subplot(2, 1, 2)
 ax1 = pl.subplot2grid((2, 5), (1, 0), colspan=3)
-successC=CL.PlotHII(Target,bin_centers,density,DENSparams) 
+successC=GX.PlotHII(Target,bin_centers,density,DENSparams) 
 
 ###############################################################################
 ax2 = pl.subplot2grid((2, 5), (0, 3), colspan=2, rowspan=2)
-successC=CL.PlotHII(Target,dr,dd,LOCparams) 
+successC=GX.PlotHII(Target,dr,dd,LOCparams) 
 ###############################################################################
 pl.subplots_adjust(left=0.06, bottom=0.09, right=0.98, top=0.95,
             wspace=0.4, hspace=0.3)
