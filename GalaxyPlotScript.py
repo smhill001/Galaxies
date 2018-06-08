@@ -29,13 +29,6 @@ path=drive+"/Astronomy/Python Play/Galaxies/"
 
 
 #Parameter Initialization
-"""HISTparams=GX.HII_plot_params(path+"HIIPlotConfig.txt")
-HISTparams.loadplotparams(drive,Target,"POSHist")
-DENSparams=GX.HII_plot_params(path+"HIIPlotConfig.txt")
-DENSparams.loadplotparams(drive,Target,"POSDens")
-LOCparams=GX.HII_plot_params(path+"HIIPlotConfig.txt")
-LOCparams.loadplotparams(drive,Target,"POSLoc")
-"""
 HISTparams=CF.PlotSetup(path+"HIIPlotConfig.txt")
 HISTparams.loadplotparams(drive,Target,"POSHist")
 DENSparams=CF.PlotSetup(path+"HIIPlotConfig.txt")
@@ -52,14 +45,12 @@ DataList=GX.ObsDataList(path+fn)
 dr=(np.array(DataList.RAJ2000)-GXparams.RA2000)*60. #in arc minutes
 dd=(np.array(DataList.DEJ2000)-GXparams.DE2000)*60 #in arc minutes
 radii=np.sqrt(dr**2.+dd**2.)
-
 #Computing the distribution histogram and density as a function of radius
 nb=np.arange(HISTparams.X0,HISTparams.X1+1,HISTparams.DX)
 hist=np.histogram(radii, bins=nb)
 bin_centers=np.arange(1,HISTparams.X1+1,HISTparams.DX)
 bin_areas=np.pi*((bin_centers+1)**2-(bin_centers-1)**2)
 density=hist[0]/bin_areas
-
 #Set up the canvas for plotting
 pl.figure(figsize=(10., 4.), dpi=150, facecolor="white")
 ###############################################################################
