@@ -18,16 +18,31 @@ coordinates)
 import pylab as pl
 import numpy as np
 import GalaxyLIB as GX
+import ConfigFiles as CF
 
 #Control Information
 drive="f:"
-Target="M101"
+Target="M33"
 TargetType="Galaxies"
 
+path=drive+"/Astronomy/Python Play/Galaxies/"
+
+
 #Parameter Initialization
-HISTparams=GX.HII_plot_params(drive,Target,"POSHist")
-DENSparams=GX.HII_plot_params(drive,Target,"POSDens")
-LOCparams=GX.HII_plot_params(drive,Target,"POSLoc")
+"""HISTparams=GX.HII_plot_params(path+"HIIPlotConfig.txt")
+HISTparams.loadplotparams(drive,Target,"POSHist")
+DENSparams=GX.HII_plot_params(path+"HIIPlotConfig.txt")
+DENSparams.loadplotparams(drive,Target,"POSDens")
+LOCparams=GX.HII_plot_params(path+"HIIPlotConfig.txt")
+LOCparams.loadplotparams(drive,Target,"POSLoc")
+"""
+HISTparams=CF.PlotSetup(path+"HIIPlotConfig.txt")
+HISTparams.loadplotparams(drive,Target,"POSHist")
+DENSparams=CF.PlotSetup(path+"HIIPlotConfig.txt")
+DENSparams.loadplotparams(drive,Target,"POSDens")
+LOCparams=CF.PlotSetup(path+"HIIPlotConfig.txt")
+LOCparams.loadplotparams(drive,Target,"POSLoc")
+
 GXparams=GX.Galaxy_Parameters(drive,Target)
 
 #Reading observational data  and transforming the origin to the galactic center

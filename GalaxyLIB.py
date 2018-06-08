@@ -8,28 +8,11 @@ Created on Wed Feb 08 09:21:01 2017
 
 @author: Astronomy
 """
+import sys
+drive='f:'
+sys.path.append(drive+'\\Astronomy\Python Play\Util')
 
-class Plot_Parameters:
-     def __init__(self,drive,Identifier):
-        """
-        This is the BASE CLASS for 2D plot parameters.  ALL 2D plots
-        posess at least an identifier, at type or intention, x and y axes,
-        and data.
-        
-        SMH 1/11/18
-        """
-        self.ID=Identifier
-        self.PlotType='' #Line plot, histogram, POS
-        self.X0=0.
-        self.X1=0.
-        self.DX=0.
-        self.Xtype='' #log or linear
-        self.Y0=0.
-        self.Y1=0.
-        self.DY=0.
-        self.Ytype=''  #log or linear
-        self.DataFile='' #Data is in this file, or possible lists of data files
-
+import ConfigFiles as CF
 
 class Astrophysical_Parameters:
     def __init__(self,drive,TargetID):
@@ -64,7 +47,6 @@ class Galaxy_Parameters(Astrophysical_Parameters):
         self.PA=0.0 #degrees
         self.Inclination=0.0 #degrees
         self.classification='' #classification
-
         CfgFile=open(drive+'/Astronomy/Python Play/Galaxies/Galaxy_Parameters.txt','r')
         CfgLines=CfgFile.readlines()
         CfgFile.close()
@@ -85,42 +67,6 @@ class Galaxy_Parameters(Astrophysical_Parameters):
                 self.DistUnits=fields[5]
                 self.mV=float(fields[6])
 
-
-class HII_plot_params(Plot_Parameters):
-    """
-    This class builds on the base class to add parameters specific to
-    HII plots. In this case, there are no additions, just the code to
-    populate the object.
-    
-    SMH 1/11/18
-    """
-    def __init__(self,drive,PlotID,PlotType):
-        #View has two options: raw or flux?
-
-        self.ID=PlotID
-
-        CfgFile=open(drive+'/Astronomy/Python Play/Galaxies/HIIPlotConfig.txt','r')
-        CfgLines=CfgFile.readlines()
-        CfgFile.close()
-        nrecords=len(CfgLines)
-        #print CfgLines
-
-        for recordindex in range(1,nrecords):
-            fields=CfgLines[recordindex].split(',')
-            #print fields[0], fields[1]
-            if fields[0] == PlotID:
-                if fields[1] == PlotType:
-                    print "In first if, fields[1]",fields[:]
-                    self.PlotType=str(fields[1])
-                    self.X0=float(fields[2])
-                    self.X1=float(fields[3])
-                    self.DX=float(fields[4])
-                    self.Xtype=str(fields[5])
-                    self.Y0=float(fields[6])
-                    self.Y1=float(fields[7])
-                    self.DY=float(fields[8])
-                    self.Ytype=str(fields[9])
-                    self.DataFile=str(fields[10])
 
 class ObsDataList:
     """
@@ -151,6 +97,7 @@ class ObsDataList:
         self.Label_Flag=['']          #Unknown
         self.Info=['']                #Free text comment/info
         self.NObs=0                   #Number of sources
+        
         self.FirstTime=True
         
         CfgFile=open(CatalogListFile,'r')
@@ -216,4 +163,3 @@ def PlotHII(Target,X_data,Y_data,plotparams):
     pl.legend(loc=1,ncol=2, borderaxespad=0.,prop={'size':6})        
 
     return 0        
-
