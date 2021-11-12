@@ -30,8 +30,8 @@ class ObsDataList(CF.readtextfilelines):
     """
     pass
     def loadcatalog(self):
-#Object,Cont_Flag,RAJ2000,DEJ2000,X,Y,Label_Flag,Info        
-        FirstTime=True
+        #Object,Cont_Flag,RAJ2000,DEJ2000,X,Y,Label_Flag,Info        
+        
         self.ObjectIdentifierDD=[]
         self.Cont_Flag=[]
         self.RAJ2000=[]
